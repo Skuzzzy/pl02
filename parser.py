@@ -131,7 +131,7 @@ def unget_token(tokens, index):
     return index-1
 
 def parse_program(tokens, index):
-    print "program"
+    # print "program"
     index, block = parse_block(tokens, index)
     index, token = get_token(tokens, index)
     if not token.literal == ".":
@@ -141,9 +141,7 @@ def parse_program(tokens, index):
     return (index, block)
 
 def parse_block(tokens, index):
-    # print index
-    # print tokens
-    print "block"
+    # print "block"
     constants = []
     index, token = get_token(tokens, index)
     if token.literal == "const":
@@ -171,9 +169,7 @@ def parse_block(tokens, index):
             if not token.token_type == "INT_LITERAL":
                 syntax_error(tokens, index, "Expected a integer literal here")
             literal = token
-            print literal, "????"
 
-            # TODO Fixme add this token to some list
             index, token = get_token(tokens, index)
         index = unget_token(tokens, index)
         index, token = get_token(tokens, index)
@@ -244,7 +240,7 @@ def parse_block(tokens, index):
               | "while" condition "do" statement ]."""
 def parse_statement(tokens, index):
     index, token = get_token(tokens, index)
-    print token, "statement"
+    # print token, "statement"
     if token.token_type == "IDENT":
         ident = token
         index, token = get_token(tokens, index)
@@ -312,7 +308,7 @@ def parse_statement(tokens, index):
 
 def parse_condition(tokens, index):
     index, token = get_token(tokens, index)
-    print token, "condition"
+    # print token, "condition"
     if token.literal == "odd":
         operator = token
         index, expression = parse_expression(tokens, index)
@@ -333,7 +329,7 @@ def parse_condition(tokens, index):
 
 def parse_expression(tokens, index):
     index, token = get_token(tokens, index)
-    print token, "expression"
+    # print token, "expression"
 
     operation = Token("DNE", "DNE", "ADD", "+")
     if token.token_type == "ADD" or token.token_type == "SUB":
@@ -358,7 +354,7 @@ def parse_expression(tokens, index):
 
 
 def parse_term(tokens, index):
-    print "term"
+    # print "term"
 
     index, factor = parse_factor(tokens, index)
 
@@ -376,7 +372,7 @@ def parse_term(tokens, index):
     return (index, root)
 
 def parse_factor(tokens, index):
-    print "factor"
+    # print "factor"
     index, token = get_token(tokens, index)
     if token.token_type == "IDENT":
         factor = token
@@ -394,13 +390,11 @@ def parse_factor(tokens, index):
     return (index, Factor(factor))
 
 def parse(program):
-    for n, test in enumerate(program.splitlines()):
-        print n, test
+    for linum, line in enumerate(program.splitlines()):
+        print linum, line
     tokens = tokenize(program)
     tokens = [token for token in tokens if token.token_type != "WHITESPACE"]
     index = 0
-    # for token in tokens:
-        # print token
     index, result = parse_program(tokens, index)
     return result
 
