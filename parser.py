@@ -1,4 +1,5 @@
 from tokenize import Token, tokenize
+from abstract_syntax_tree import Const, Literal, Var, Procedure, Program, Block, Statement, Condition, Expression, Term, Factor
 import traceback
 import sys
 
@@ -6,58 +7,6 @@ def syntax_error(tokens, index, err_msg=""):
     print(str(tokens[index-1]), err_msg)
     traceback.print_stack()
     sys.exit(-1)
-
-class Const(object):
-    def __init__(self, ident, value):
-        self.ident = ident
-        self.value = value
-
-class Var(object):
-    def __init__(self, ident):
-        self.ident = ident
-
-class Procedure(object):
-    def __init__(self, ident, block):
-        self.ident = ident
-        self.block = block
-
-class Program(object):
-    def __init__(self, block):
-        self.block = block
-
-class Block(object):
-    def __init__(self, constants, variables, procedures, statement):
-        self.constants = constants
-        self.variables = variables
-        self.procedures = procedures
-        self.statement = statement
-
-class Statement(object):
-    def __init__(self, operator, argument_list):
-        self.operator = operator
-        self.argument_list = argument_list
-
-class Condition(object):
-    def __init__(self, operator, expr1, expr2=None):
-        self.operator = operator
-        self.expr1 = expr1
-        self.expr1 = expr2
-
-class Expression(object):
-    def __init__(self, operator, term1, term2):
-        self.operator = operator
-        self.term1 = term1
-        self.term2 = term2
-
-class Term(object):
-    def __init__(self, operator, factor1, factor2):
-        self.operator = operator
-        self.factor1 = factor1
-        self.factor2 = factor2
-
-class Factor(object):
-    def __init__(self, value):
-        self.value = value
 
 program = """
 CONST
@@ -171,6 +120,7 @@ def parse_block(tokens, index):
             literal = token
 
             index, token = get_token(tokens, index)
+            constants.append(Const(ident, literal))
         index = unget_token(tokens, index)
         index, token = get_token(tokens, index)
         if not token.literal == ";":
@@ -375,9 +325,9 @@ def parse_factor(tokens, index):
     # print "factor"
     index, token = get_token(tokens, index)
     if token.token_type == "IDENT":
-        factor = token
+        factor = Var(token)
     elif token.token_type == "INT_LITERAL":
-        factor = token
+        factor = Literal(token)
     elif token.token_type == "L-PAREN":
         index, expression = parse_expression(tokens, index)
         index, token = get_token(tokens, index)
