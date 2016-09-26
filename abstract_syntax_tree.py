@@ -1,9 +1,10 @@
 from tokenize import Token
 import sys
 
-def runtime_error(ast_node, const_context, var_context, proc_context, message=""):
+def ast_error(ast_node, const_context, var_context, proc_context, message=""):
     print(ast_node, const_context, var_context, proc_context, message)
     sys.exit(-1)
+
 
 class Const(object):
     def __init__(self, ident, value):
@@ -11,8 +12,14 @@ class Const(object):
         self.value = value
 
     def eval(self, const_context, var_context, proc_context):
-        print(self.value)
+        # print(self.value)
         return int(self.value.literal)
+
+    # def validate(self, const_context, var_context, proc_context):
+        # try:
+            # int(self.value.literal)
+        # except ValueError as e:
+            # ast_error(self, const_context, var_context, proc_context, "Invalid const literal \"{}\"".format(self.value.literal))
 
 class Literal(object):
     def __init__(self, value):
@@ -75,7 +82,7 @@ class Statement(object):
             if self.argument_list[0].literal in var_context:
                 var_context[self.argument_list[0].literal] = self.argument_list[1].eval(const_context, var_context, proc_context)
             else:
-                runtime_error(self, const_context, var_context, proc_context, "Attempted assignment to name {} that does not exist as a variable".format(self.argument_list[0].literal))
+                ast_error(self, const_context, var_context, proc_context, "Attempted assignment to name {} that does not exist as a variable".format(self.argument_list[0].literal))
         elif self.operator.literal == "while":
             while self.argument_list[0].eval(const_context, var_context, proc_context):
                 self.argument_list[1].eval(const_context, var_context, proc_context)

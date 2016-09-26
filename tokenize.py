@@ -43,6 +43,29 @@ def tokenize(text):
             # We are now at a nonspace
             # TODO Do I want to make the literal reflect the actual whitespace?
             tokens.append(Token(start_linenum, start_col, "WHITESPACE", " "))
+        elif text[index] == "/":
+            index += 1
+            col += 1
+            if text[index] != "*":
+                tokens.append(Token(linenum, col, "DIV", "/"))
+            while (index < len(text)):
+                if text[index] == "*":
+                    if(index+1 < len(text)):
+                        index += 1
+                        col += 1
+                        if text[index] == "/":
+                            index += 1
+                            col += 1
+                            break
+                    else:
+                        syntax_error(text, index, linenum, col)
+                if text[index] == '\n':
+                    linenum += 1
+                    index += 1
+                    col = 0
+                else:
+                    col += 1
+                    index += 1
 
         elif text[index] == ".":
             tokens.append(Token(linenum, col, "PERIOD", "."))
@@ -56,11 +79,6 @@ def tokenize(text):
 
         elif text[index] == "*":
             tokens.append(Token(linenum, col, "MUL", "*"))
-            index += 1
-            col += 1
-
-        elif text[index] == "/":
-            tokens.append(Token(linenum, col, "DIV", "/"))
             index += 1
             col += 1
 

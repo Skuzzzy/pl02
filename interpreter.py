@@ -3,6 +3,10 @@ from parser import parse
 program = """
 VAR x, squ;
 
+/*
+    This is a comment
+*/
+
 PROCEDURE square;
 BEGIN
    squ:= x * x
