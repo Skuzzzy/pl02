@@ -110,8 +110,8 @@ class Condition(object):
             return 1 if self.expr1.eval(const_context, var_context, proc_context) >= self.expr2.eval(const_context, var_context, proc_context) else 0
         elif self.operator.literal == "<=":
             return 1 if self.expr1.eval(const_context, var_context, proc_context) <= self.expr2.eval(const_context, var_context, proc_context) else 0
-        elif self.operator.literal == "#": # TODO TODO VERIFY THIS
-            return 1 if (self.expr1.eval(const_context, var_context, proc_context) % self.expr2.eval(const_context, var_context, proc_context)) == 0 else 0
+        # elif self.operator.literal == "#": # TODO TODO VERIFY THIS FIXME No idea what thhis operator does, not listed in spec
+            # return 1 if (self.expr1.eval(const_context, var_context, proc_context) % self.expr2.eval(const_context, var_context, proc_context)) == 0 else 0
         elif self.operator.literal == "odd":
             return 1 if (self.expr1.eval(const_context, var_context, proc_context) % 2 != 0) else 0
         else:

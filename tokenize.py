@@ -128,7 +128,7 @@ def tokenize(text):
                 index += 1
                 col += 1
 
-        elif text[index] in {"=", "#", "<", ">"}:
+        elif text[index] in {"=", "<", ">"}:
             cmp_op = text[index]
             start_col = col
             index += 1
