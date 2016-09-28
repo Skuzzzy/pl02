@@ -283,11 +283,38 @@ def parse(program):
     index, result = parse_program(tokens, index)
     return result
 
-# import jsonpickle
-# import json
-# import pprint
-# pp = pprint.PrettyPrinter()
-# frozen = jsonpickle.encode(parse(program))
-# thawed = json.loads(frozen)
-# print(parse(program))
-# pp.pprint(thawed)
+
+if __name__ == "__main__":
+    program = """
+    VAR x, squ;
+
+    /*
+        This is a comment
+    */
+
+    PROCEDURE square;
+    BEGIN
+       squ:= x * x
+    END;
+
+    BEGIN
+       x := 1;
+       WHILE x <= 10 DO
+       BEGIN
+          CALL square;
+          ! squ;
+          x := x + 1
+       END
+    END.
+    """
+
+    # Don't you dare preach PEP-8 to me
+    import jsonpickle
+    import json
+    import pprint
+    pp = pprint.PrettyPrinter()
+    # End Don't you dare preach PEP-8 to me
+    frozen = jsonpickle.encode(parse(program))
+    thawed = json.loads(frozen)
+    print(parse(program))
+    pp.pprint(thawed)

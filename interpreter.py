@@ -27,5 +27,5 @@ def interpret(program_text):
     print("")
     program.eval({}, {}, {})
 
-
-interpret(program)
+if __name__ == "__main__":
+    interpret(program)
