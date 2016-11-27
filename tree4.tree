@@ -1,0 +1,44 @@
+
+
+FUNC main
+    NEW A
+    NEW B
+
+    SET A 10
+    SET B 13
+
+    NEW RET
+    FUNCALL countdown A RET
+
+    PRINT RET
+    RETURN 0
+ENDFUNC
+
+FUNC countdown
+    PARAM N
+
+    !loop1
+    JEQ N 0 endloop1
+
+    NEW a
+    FUNCALL nested N a
+    SUB N 1
+
+    JUMP loop1
+    !endloop1
+
+    RETURN 0
+ENDFUNC
+
+FUNC nested
+    PARAM Z
+
+    NEW A
+    NEW B
+    NEW C
+    NEW D
+    PRINT Z
+
+    RETURN Z
+
+ENDFUNC
