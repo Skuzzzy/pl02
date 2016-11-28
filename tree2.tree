@@ -1,0 +1,55 @@
+
+
+
+FUNC main
+    # treelang
+    # this program demonstrates the function frames on the stack by recursion
+    NEW N
+    SET N 5
+
+    NEW RET
+    FUNCALL recursive_factorial N RET
+    PRINT RET
+
+    RETURN 0
+ENDFUNC
+
+FUNC mult
+    PARAM A
+    PARAM B
+
+    NEW TEMP
+    SET TEMP A
+    NEW RES
+    SET RES 0
+
+    !loop1
+    JEQ TEMP 0 end1
+        ADD RES B
+        SUB TEMP 1
+    JUMP loop1
+    !end1
+
+    RETURN RES
+ENDFUNC
+
+FUNC recursive_factorial
+    PARAM N
+
+    NEW RES2
+    SET RES2 1
+    JEQ N 0 factend
+
+    NEW NMW
+    SET NMW N
+    SUB NMW 1
+
+    NEW RES
+    FUNCALL recursive_factorial NMW RES
+
+    FUNCALL mult N RES RES2
+
+    !factend
+
+    RETURN RES2
+ENDFUNC

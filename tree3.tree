@@ -1,0 +1,52 @@
+
+
+
+FUNC main
+    # treelang
+    # this program prints the first 24 fibonacci numbers
+    NEW N
+    SET N 1
+
+    NEW N_END
+    SET N_END 25
+
+    !loop1
+    JEQ N N_END end1
+
+        NEW RET
+        FUNCALL fibonacci N RET
+        PRINT RET
+
+        ADD N 1
+
+    JUMP loop1
+    !end1
+
+    RETURN 0
+ENDFUNC
+
+FUNC fibonacci
+    PARAM N
+
+    NEW N_PRIME
+    SET N_PRIME 0
+
+    NEW A
+    NEW B
+    SET A 0
+    SET B 1
+
+    !loop2
+    JEQ N N_PRIME end2
+
+    NEW TEMP
+    SET TEMP B
+    ADD B A
+    SET A TEMP
+
+    ADD N_PRIME 1
+    JUMP loop2
+    !end2
+
+    RETURN A
+ENDFUNC
